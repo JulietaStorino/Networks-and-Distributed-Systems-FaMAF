@@ -57,9 +57,7 @@ Integra tu API con una API externa de feriados. Puedes utilizar la siguiente API
 
 Se les entrega una aplicación de Python que utiliza la API de nolaborables.com.ar para obtener información sobre los feriados en Argentina. La aplicación busca y muestra el próximo feriado disponible.
 
-   a. Modifica el código para que agregar la opción de buscar feriados por tipo:
-
-      ***inamovible | trasladable | nolaborable | puente***
+   a. Modifica el código para agregar la opción de buscar feriados por tipo: ***inamovible | trasladable | nolaborable | puente***
 
    b. En la api de películas Utiliza la API de feriados para agregar la siguiente funcionalidad:
 
@@ -83,28 +81,28 @@ Junto con el código deberá entregar una presentación (tipo powerpoint) y un v
 1. **Introducción al proyecto**:
 	a. Presenta brevemente el contexto del proyecto y sus objetivos.
    b. Explica la importancia de desarrollar una API robusta y bien diseñada.
-1. **Configuración del entorno e instalación de librerías**:
+2. **Configuración del entorno e instalación de librerías**:
    a. Explica por qué es importante utilizar un entorno virtual de programación.
    b. Muestra cómo configurar un entorno virtual de Python usando *venv*.
    c. Explica cómo activar y desactivar el entorno virtual.
    d. Guía sobre la instalación de las librerías necesarias utilizando *pip*.
-1. **Creación de una API con Flask**:
+3. **Creación de una API con Flask**:
    a. Describe las funcionalidades básicas de la API a desarrollar.
    b. Muestra cómo completaron las funcionalidades proporcionadas en el archivo *main.py*.
    c. Explica cada una de las partes de la API y su propósito.
-1. **Pruebas de la API**:
+4. **Pruebas de la API**:
    a. Presenta las recomendaciones para probar la API utilizando *curl* o Postman.
    b. Explica cómo realizar pruebas con *curl*.
    c. Muestra cómo realizar pruebas con Postman y replica los mismos tests que se realizan con *curl*.
-1. **Consumo de una API externa**:
+5. **Consumo de una API externa**:
    a. Introduce la integración con la API externa de feriados.
    b. Explica cómo modificar el código existente para agregar funcionalidades relacionadas con los feriados.
    c. Demuestra cómo utilizar la API de feriados para obtener información y recomendar películas.
-1. **Evaluación de la API**:
+6. **Evaluación de la API**:
    a. Explica la importancia de la evaluación de la API.
    b. Presenta el archivo *test.py* o *test\_pytest.py* y muestra cómo agregar tests para las nuevas funcionalidades.
    c. Reproduce los mismos tests en Postman para verificar la funcionalidad desde el punto de vista del cliente.
-1. **Conclusiones y próximos pasos**:
+7. **Conclusiones y próximos pasos**:
    a. Resalta los resultados de la evaluación de la API.
    b. Propone posibles mejoras o ampliaciones para la API.
    c. Concluye el video resumiendo los principales puntos y agradeciendo por la atención.
