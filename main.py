@@ -16,6 +16,11 @@ peliculas = [
     {'id': 12, 'titulo': 'Fight Club', 'genero': 'Drama'}
 ]
 
+def buscar_por_id(id):
+    for pelicula in peliculas:
+        if pelicula['id'] == id:
+            return pelicula
+    return None
 
 def obtener_peliculas():
     return jsonify(peliculas)
@@ -38,7 +43,13 @@ def agregar_pelicula():
 
 
 def actualizar_pelicula(id):
-    # Lógica para buscar la película por su ID y actualizar sus detalles
+    pelicula_actualizada = buscar_por_id(id)
+    if pelicula_actualizada is None:
+        return jsonify({'mensaje': 'Película no encontrada'}), 404
+    
+    pelicula_actualizada['titulo'] = request.json.get('titulo', pelicula_actualizada['titulo'])
+    pelicula_actualizada['genero'] = request.json.get('genero', pelicula_actualizada['genero'])
+
     return jsonify(pelicula_actualizada)
 
 
@@ -53,6 +64,13 @@ def obtener_nuevo_id():
         return ultimo_id + 1
     else:
         return 1
+
+def busqueda_por_nombre(nombre):
+    peliculas_encontradas = []
+    for pelicula in peliculas:
+        if nombre.lower() in pelicula['titulo'].lower():
+            peliculas_encontradas.append(pelicula)
+    return peliculas_encontradas
 
 
 app.add_url_rule('/peliculas', 'obtener_peliculas', obtener_peliculas, methods=['GET'])
