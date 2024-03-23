@@ -11,6 +11,10 @@ def mock_response():
             {'id': 2, 'titulo': 'Star Wars', 'genero': 'Acción'}
         ])
 
+        # Simulamos la respuesta para obtener todas las películas de un género específico
+        genero = 'Acción'
+        m.get('http://localhost:5000/peliculas/{genero}', status_code=200)
+
         # Simulamos la respuesta para agregar una nueva película
         m.post('http://localhost:5000/peliculas', status_code=201, json={'id': 3, 'titulo': 'Pelicula de prueba', 'genero': 'Acción'})
 
@@ -27,6 +31,12 @@ def mock_response():
 
 def test_obtener_peliculas(mock_response):
     response = requests.get('http://localhost:5000/peliculas')
+    assert response.status_code == 200
+    assert len(response.json()) == 2
+
+def test_obtener_peliculas_por_genero(mock_response):
+    genero = 'Acción'
+    response = requests.get('http://localhost:5000/peliculas/{genero}')
     assert response.status_code == 200
     assert len(response.json()) == 2
 

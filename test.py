@@ -8,6 +8,16 @@ for pelicula in peliculas:
     print(f"ID: {pelicula['id']}, Título: {pelicula['titulo']}, Género: {pelicula['genero']}")
 print()
 
+# Obtener todas las películas de un género específico
+genero = 'Acción'  # Género de las películas a obtener
+response = requests.get(f'http://localhost:5000/peliculas/{genero}')
+peliculas_genero = response.json()
+print(f"Películas de género {genero}:")
+print(f"http://localhost:5000/peliculas/{genero}")
+for pelicula in peliculas_genero:
+    print(f"ID: {pelicula['id']}, Título: {pelicula['titulo']}, Género: {pelicula['genero']}")
+print()
+
 # Agregar una nueva película
 nueva_pelicula = {
     'titulo': 'Pelicula de prueba',
