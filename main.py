@@ -28,7 +28,19 @@ def obtener_peliculas():
 
 def obtener_pelicula(id):
     # Lógica para buscar la película por su ID y devolver sus detalles
+    pelicula_encontrada = buscar_por_id(id)
+    if pelicula_encontrada is None:
+        return jsonify({'mensaje': 'Película no encontrada'}), 404
     return jsonify(pelicula_encontrada)
+
+
+def obtener_peliculas_por_genero(genero):
+    # Lógica para devolver el listado de películas de un género específico
+    peliculas_por_genero = []
+    for pelicula in peliculas:
+        if pelicula['genero'] == genero:
+            peliculas_por_genero.append(pelicula)
+    return jsonify(peliculas_por_genero)
 
 
 def agregar_pelicula():
@@ -78,6 +90,7 @@ app.add_url_rule('/peliculas/<int:id>', 'obtener_pelicula', obtener_pelicula, me
 app.add_url_rule('/peliculas', 'agregar_pelicula', agregar_pelicula, methods=['POST'])
 app.add_url_rule('/peliculas/<int:id>', 'actualizar_pelicula', actualizar_pelicula, methods=['PUT'])
 app.add_url_rule('/peliculas/<int:id>', 'eliminar_pelicula', eliminar_pelicula, methods=['DELETE'])
+app.add_url_rule('/peliculas/<string:genero>', 'obtener_peliculas_por_genero', obtener_peliculas_por_genero, methods=['GET'])
 
 if __name__ == '__main__':
     app.run()
