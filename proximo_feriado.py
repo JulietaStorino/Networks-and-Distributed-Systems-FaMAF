@@ -6,23 +6,17 @@ def get_url(year):
 
 months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
 days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
+h_types = ['todos', 'inamovible', 'trasladable', 'nolaborable', 'puente']
 
 def day_of_week(day, month, year):
     return days[date(year, month, day).weekday()]
 
 class NextHoliday:
-    def __init__(self):
+    def __init__(self, h_type):
         self.loading = True
         self.year = date.today().year
         self.holiday = None
-        self.type = None
-
-        while self.type not in ['todos', 'inamovible', 'trasladable', 'nolaborable', 'puente']:
-            print("Ingrese el tipo de feriado: todos | inamovible | trasladable | nolaborable | puente")
-            self.type = input()
-
-        print(f"Buscando el proximo feriado de tipo {self.type}...")
-
+        self.type = h_types[0] if h_type not in h_types else h_type
 
     def set_next(self, holidays):
         now = date.today()
@@ -60,6 +54,7 @@ class NextHoliday:
             print("Tipo:")
             print(self.holiday['tipo'])
 
-next_holiday = NextHoliday()
-next_holiday.fetch_holidays()
-next_holiday.render()
+# Código de prueba
+# next_holiday = NextHoliday('trasladable')
+# next_holiday.fetch_holidays()
+# next_holiday.render()
