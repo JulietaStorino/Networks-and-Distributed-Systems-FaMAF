@@ -57,7 +57,8 @@ def agregar_pelicula():
 
 
 def actualizar_pelicula(id):
-    # Lógica para buscar la película por su ID y actualizar sus detalles    pelicula_actualizada = buscar_por_id(id)
+    # Lógica para buscar la película por su ID y actualizar sus detalles
+    pelicula_actualizada = buscar_por_id(id)
     if pelicula_actualizada is None:
         return jsonify({'mensaje': 'Película no encontrada'}), 404
     
