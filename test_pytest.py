@@ -30,6 +30,12 @@ def mock_response():
         # Simulamos la respuesta para actualizar los detalles de una película
         m.put('http://localhost:5000/peliculas/1', status_code=200, json={'id': 1, 'titulo': 'Nuevo título', 'genero': 'Comedia'})
 
+        # simulamos la respuesta para sugerir una pelicula aleatoria
+        m.get('http://localhost:5000/peliculas/sugerir',status_code=200, json={'id': 2, 'titulo': 'Star Wars', 'genero': 'Acción'})
+
+        # simulamos la respuesta para sugerir una pelicula aleatoria
+        m.get('http://localhost:5000/peliculas/sugerir/Acción',status_code=200, json={'id': 2, 'titulo': 'Star Wars', 'genero': 'Acción'})
+
         # Simulamos la respuesta para eliminar una película
         m.delete('http://localhost:5000/peliculas/1', status_code=200)
 
@@ -67,6 +73,25 @@ def test_actualizar_detalle_pelicula(mock_response):
     response = requests.put('http://localhost:5000/peliculas/1', json=datos_actualizados)
     assert response.status_code == 200
     assert response.json()['titulo'] == 'Nuevo título'
+
+def test_sugerir(mock_response):
+    response = requests.get('http://localhost:5000/peliculas/sugerir')
+    assert response.status_code == 200
+    assert 'id' in response.json()  # Ensure the response contains the expected keys
+    assert 'titulo' in response.json()
+    assert 'genero' in response.json()
+
+def test_sugerir_por_genero(mock_response):
+    genero = 'Acción'
+    response = requests.get('http://localhost:5000/peliculas/sugerir/Acción')
+    
+    assert response.status_code == 200
+    assert 'id' in response.json()  
+    assert 'titulo' in response.json()
+    assert 'genero' in response.json()
+    
+    genero_sugerido = response.json()['genero']  
+    assert genero_sugerido == genero 
 
 def test_eliminar_pelicula(mock_response):
     response = requests.delete('http://localhost:5000/peliculas/1')

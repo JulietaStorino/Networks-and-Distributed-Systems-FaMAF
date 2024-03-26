@@ -58,6 +58,28 @@ else:
     print("Error al actualizar la película.")
 print()
 
+#Sugerir una pelicula aleatoria
+response = requests.get('http://localhost:5000/peliculas/sugerir')
+if response.status_code == 200:
+    pelicula = response.json()
+    print("Película sugerida:")
+    print(f"Título: {pelicula['titulo']}, Género: {pelicula['genero']}")
+else:
+    print("Error al obtener los detalles de la película.")
+print()
+
+#sugerir un pelicula aleatoria de un genero especifico
+genero = 'Acción'
+response = requests.get(f'http://localhost:5000/peliculas/sugerir/{genero}')
+if response.status_code == 200:
+    pelicula = response.json()
+    print(f"Película de {pelicula['genero']} sugerida:")
+    print(f"Título: {pelicula['titulo']}")
+else:
+    print("Error al obtener los detalles de la película.")
+print()
+
+
 # Eliminar una película
 id_pelicula = 1  # ID de la película a eliminar
 response = requests.delete(f'http://localhost:5000/peliculas/{id_pelicula}')
