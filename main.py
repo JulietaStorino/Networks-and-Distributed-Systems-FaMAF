@@ -96,7 +96,7 @@ def sugerir_por_genero(genero):
     for pelicula in peliculas:
         if pelicula['genero'] == genero:
             peliculas_posibles.append(pelicula)
-    if len(peliculas_posibles) ==0:
+    if len(peliculas_posibles) == 0:
         return jsonify({'mensaje': 'Genero no encontrado'}), 404
     else:
         pelicula_sugerida = choice(peliculas_posibles)
@@ -107,7 +107,13 @@ def busqueda_por_proximo_feriado(genero):
     # Lógica para buscar el próximo feriado y devolver una recomendación de película
     proximo_feriado = NextHoliday('todos')
     proximo_feriado.fetch_holidays()
-    recomendacion = choice(obtener_peliculas_por_genero(peliculas))
+    
+    response = obtener_peliculas_por_genero(genero)
+    peliculas_json = response.get_json()
+
+    if not peliculas_json:
+        return jsonify({"error": "No hay películas para el género especificado"})
+    recomendacion = choice(peliculas_json)
 
     feriado = {
         'fecha': f"{proximo_feriado.holiday['dia']}/{proximo_feriado.holiday['mes']}",
@@ -120,7 +126,7 @@ def busqueda_por_proximo_feriado(genero):
 
 app.add_url_rule('/peliculas', 'obtener_peliculas', obtener_peliculas, methods=['GET'])
 app.add_url_rule('/peliculas', 'agregar_pelicula', agregar_pelicula, methods=['POST'])
-app.add_url_rule('/peliculas/feriado', 'busqueda_por_proximo_feriado', busqueda_por_proximo_feriado, methods=['GET'])
+app.add_url_rule('/peliculas/feriado/<string:genero>', 'busqueda_por_proximo_feriado', busqueda_por_proximo_feriado, methods=['GET'])
 app.add_url_rule('/peliculas/<int:id>', 'obtener_pelicula', obtener_pelicula, methods=['GET'])
 app.add_url_rule('/peliculas/<int:id>', 'actualizar_pelicula', actualizar_pelicula, methods=['PUT'])
 app.add_url_rule('/peliculas/<int:id>', 'eliminar_pelicula', eliminar_pelicula, methods=['DELETE'])
