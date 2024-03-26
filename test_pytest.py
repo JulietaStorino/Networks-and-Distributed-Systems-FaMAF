@@ -15,9 +15,12 @@ def mock_response():
         genero = 'Acción'
         m.get(f'http://localhost:5000/peliculas/{genero}', status_code=200, json=[
             {'id': 1, 'titulo': 'Indiana Jones', 'genero': 'Acción'},
-            {'id': 2, 'titulo': 'Star Wars', 'genero': 'Acción'}
+            {'id': 2, 'titulo': 'Star Wars', 'genero': 'Acción'},
+            {'id': 5, 'titulo': 'The Avengers', 'genero': 'Acción'},
+            {'id': 8, 'titulo': 'The Dark Knight', 'genero': 'Acción'},
         ])
 
+        # Simulamos la respuesta para buscar películas por nombre
         nombre = 'Indian'
         m.get(f'http://localhost:5000/peliculas/buscar/{nombre}', status_code=404, json={'id': 1, 'titulo': 'Indiana Jones', 'genero': 'Acción'})
 
@@ -50,7 +53,7 @@ def test_obtener_peliculas_por_genero(mock_response):
     genero = 'Acción'
     response = requests.get(f'http://localhost:5000/peliculas/{genero}')
     assert response.status_code == 200
-    assert len(response.json()) == 2
+    assert len(response.json()) == 4
 
 def test_buscar_pelicula_por_nombre(mock_response):
     nombre = 'Indian'

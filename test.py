@@ -33,7 +33,7 @@ else:
 print()
 
 # Obtener detalles de una película específica
-id_pelicula = 1  # ID de la película a obtener
+id_pelicula = 1 # ID de la película a obtener
 response = requests.get(f'http://localhost:5000/peliculas/{id_pelicula}')
 if response.status_code == 200:
     pelicula = response.json()
@@ -87,3 +87,48 @@ if response.status_code == 200:
     print("Película eliminada correctamente.")
 else:
     print("Error al eliminar la película.")
+
+# Buscar películas por nombre
+nombre = 'Indian'  # Nombre de la película a buscar
+response = requests.get(f'http://localhost:5000/peliculas/buscar/{nombre}')
+if response.status_code == 404:
+    print("Película no encontrada.")
+else:
+    peliculas_nombre = response.json()
+    print(f'Películas que contienen la palabra {nombre} encontradas:')
+    for pelicula in peliculas_nombre:
+        print(f"ID: {pelicula['id']}, Título: {pelicula['titulo']}, Género: {pelicula['genero']}")
+print()
+
+
+# Sugerir una película aleatoria
+response = requests.get('http://localhost:5000/peliculas/sugerir')
+if response.status_code == 200:
+    pelicula_sugerida = response.json()
+    print("Película sugerida:")
+    print(f"ID: {pelicula_sugerida['id']}, Título: {pelicula_sugerida['titulo']}, Género: {pelicula_sugerida['genero']}")
+else:
+    print("Error al sugerir una película.")
+print()
+
+# Sugerir una película de un género específico
+genero = 'Ciencia ficción'  # Género de la película a sugerir
+response = requests.get(f'http://localhost:5000/peliculas/sugerir/{genero}')
+if response.status_code == 200:
+    pelicula_sugerida = response.json()
+    print(f"Película de género {genero} sugerida:")
+    print(f"ID: {pelicula_sugerida['id']}, Título: {pelicula_sugerida['titulo']}, Género: {pelicula_sugerida['genero']}")
+else:
+    print("Error al sugerir una película de ese género.")
+print()
+
+# Sugerir según el próximo feriado
+genero = 'Ciencia ficción'  # Género de la película a sugerir
+response = requests.get(f'http://localhost:5000/peliculas/feriado/{genero}')
+if response.status_code == 200:
+    feriado = response.json()
+    print("Película sugerida para el próximo feriado:")
+    print(f"Fecha: {feriado['fecha']}, Motivo: {feriado['motivo']}, Género: {feriado['genero']}, Recomendación: {feriado['recomendacion']}")
+else:
+    print("Error al sugerir una película para el próximo feriado.")
+print()

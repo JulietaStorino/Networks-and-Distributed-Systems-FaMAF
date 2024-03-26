@@ -36,7 +36,7 @@ def obtener_pelicula(id):
     return jsonify(pelicula_encontrada)
 
 
-def obtener_peliculas_por_genero(genero):
+def busqueda_por_genero(genero):
     # Lógica para devolver el listado de películas de un género específico
     peliculas_por_genero = []
     for pelicula in peliculas:
@@ -57,7 +57,7 @@ def agregar_pelicula():
 
 
 def actualizar_pelicula(id):
-    pelicula_actualizada = buscar_por_id(id)
+    # Lógica para buscar la película por su ID y actualizar sus detalles    pelicula_actualizada = buscar_por_id(id)
     if pelicula_actualizada is None:
         return jsonify({'mensaje': 'Película no encontrada'}), 404
     
@@ -67,6 +67,7 @@ def actualizar_pelicula(id):
     return jsonify(pelicula_actualizada)
 
 def eliminar_pelicula(id):
+    # Lógica para buscar la película por su ID y eliminarla
     for pelicula in peliculas:
         if pelicula['id'] == id:
             peliculas.remove(pelicula)
@@ -81,6 +82,7 @@ def obtener_nuevo_id():
         return 1
 
 def busqueda_por_nombre(nombre):
+    # Lógica para devolver el listado de películas que tengan determinado string en el
     peliculas_encontradas = []
     for pelicula in peliculas:
         if nombre.lower() in pelicula['titulo'].lower():
@@ -92,6 +94,7 @@ def sugerir_pelicula():
     return jsonify(pelicula_sugerida)
 
 def sugerir_por_genero(genero):
+    # Lógica para sugerir una película aleatoria de un género específico
     peliculas_posibles  = []
     for pelicula in peliculas:
         if pelicula['genero'] == genero:
@@ -108,7 +111,7 @@ def busqueda_por_proximo_feriado(genero):
     proximo_feriado = NextHoliday('todos')
     proximo_feriado.fetch_holidays()
     
-    response = obtener_peliculas_por_genero(genero)
+    response = busqueda_por_genero(genero)
     peliculas_json = response.get_json()
 
     if not peliculas_json:
@@ -130,7 +133,7 @@ app.add_url_rule('/peliculas/feriado/<string:genero>', 'busqueda_por_proximo_fer
 app.add_url_rule('/peliculas/<int:id>', 'obtener_pelicula', obtener_pelicula, methods=['GET'])
 app.add_url_rule('/peliculas/<int:id>', 'actualizar_pelicula', actualizar_pelicula, methods=['PUT'])
 app.add_url_rule('/peliculas/<int:id>', 'eliminar_pelicula', eliminar_pelicula, methods=['DELETE'])
-app.add_url_rule('/peliculas/<string:genero>', 'obtener_peliculas_por_genero', obtener_peliculas_por_genero, methods=['GET'])
+app.add_url_rule('/peliculas/<string:genero>', 'busqueda_por_genero', busqueda_por_genero, methods=['GET'])
 app.add_url_rule('/peliculas/buscar/<string:nombre>', 'busqueda_por_nombre', busqueda_por_nombre, methods=['GET'])
 app.add_url_rule('/peliculas/sugerir', 'sugerir_pelicula', sugerir_pelicula, methods=['GET'])
 app.add_url_rule('/peliculas/sugerir/<string:genero>', 'sugerir_por_genero', sugerir_por_genero, methods=['GET'])
