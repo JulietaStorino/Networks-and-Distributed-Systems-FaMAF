@@ -108,6 +108,7 @@ app.add_url_rule('/peliculas/<int:id>', 'obtener_pelicula', obtener_pelicula, me
 app.add_url_rule('/peliculas/<int:id>', 'actualizar_pelicula', actualizar_pelicula, methods=['PUT'])
 app.add_url_rule('/peliculas/<int:id>', 'eliminar_pelicula', eliminar_pelicula, methods=['DELETE'])
 app.add_url_rule('/peliculas/<string:genero>', 'obtener_peliculas_por_genero', obtener_peliculas_por_genero, methods=['GET'])
+app.add_url_rule('/peliculas/buscar/<string:nombre>', 'busqueda_por_nombre', busqueda_por_nombre, methods=['GET'])
 
 if __name__ == '__main__':
     app.run()
