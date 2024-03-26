@@ -86,11 +86,11 @@ def busqueda_por_nombre(nombre):
             peliculas_encontradas.append(pelicula)
     return peliculas_encontradas
 
-def busqueda_por_proximo_feriado():
+def busqueda_por_proximo_feriado(genero):
     # Lógica para buscar el próximo feriado y devolver una recomendación de película
     proximo_feriado = NextHoliday('todos')
     proximo_feriado.fetch_holidays()
-    recomendacion = choice(peliculas)
+    recomendacion = choice(obtener_peliculas_por_genero(peliculas))
 
     feriado = {
         'fecha': f"{proximo_feriado.holiday['dia']}/{proximo_feriado.holiday['mes']}",
