@@ -66,11 +66,12 @@ def actualizar_pelicula(id):
 
     return jsonify(pelicula_actualizada)
 
-
 def eliminar_pelicula(id):
-    # Lógica para buscar la película por su ID y eliminarla
-    return jsonify({'mensaje': 'Película eliminada correctamente'})
-
+    for pelicula in peliculas:
+        if pelicula['id'] == id:
+            peliculas.remove(pelicula)
+            return jsonify({'mensaje': 'Película eliminada correctamente'})
+    return jsonify({'mensaje': 'Película no encontrada'}), 404
 
 def obtener_nuevo_id():
     if len(peliculas) > 0:
@@ -85,6 +86,22 @@ def busqueda_por_nombre(nombre):
         if nombre.lower() in pelicula['titulo'].lower():
             peliculas_encontradas.append(pelicula)
     return peliculas_encontradas
+
+def sugerir_pelicula():
+    pelicula_sugerida = choice(peliculas)
+    return jsonify(pelicula_sugerida)
+
+def sugerir_por_genero(genero):
+    peliculas_posibles  = []
+    for pelicula in peliculas:
+        if pelicula['genero'] == genero:
+            peliculas_posibles.append(pelicula)
+    if len(peliculas_posibles) ==0:
+        return jsonify({'mensaje': 'Genero no encontrado'}), 404
+    else:
+        pelicula_sugerida = choice(peliculas_posibles)
+        return jsonify(pelicula_sugerida), 200
+
 
 def busqueda_por_proximo_feriado(genero):
     # Lógica para buscar el próximo feriado y devolver una recomendación de película
@@ -109,6 +126,8 @@ app.add_url_rule('/peliculas/<int:id>', 'actualizar_pelicula', actualizar_pelicu
 app.add_url_rule('/peliculas/<int:id>', 'eliminar_pelicula', eliminar_pelicula, methods=['DELETE'])
 app.add_url_rule('/peliculas/<string:genero>', 'obtener_peliculas_por_genero', obtener_peliculas_por_genero, methods=['GET'])
 app.add_url_rule('/peliculas/buscar/<string:nombre>', 'busqueda_por_nombre', busqueda_por_nombre, methods=['GET'])
+app.add_url_rule('/peliculas/sugerir', 'sugerir_pelicula', sugerir_pelicula, methods=['GET'])
+app.add_url_rule('/peliculas/sugerir/<string:genero>', 'sugerir_por_genero', sugerir_por_genero, methods=['GET'])
 
 if __name__ == '__main__':
     app.run()
