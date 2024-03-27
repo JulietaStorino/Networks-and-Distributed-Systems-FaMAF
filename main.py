@@ -1,8 +1,10 @@
 from flask import Flask, jsonify, request
 from proximo_feriado import NextHoliday
 from random import choice
+from urllib.parse import unquote #codificador: https://www.urlencoder.io/ 
 
 app = Flask(__name__)
+
 peliculas = [
     {'id': 1, 'titulo': 'Indiana Jones', 'genero': 'Acción'},
     {'id': 2, 'titulo': 'Star Wars', 'genero': 'Acción'},
@@ -38,6 +40,7 @@ def obtener_pelicula(id):
 
 def busqueda_por_genero(genero):
     # Lógica para devolver el listado de películas de un género específico
+    genero = unquote(genero)
     peliculas_por_genero = []
     for pelicula in peliculas:
         if pelicula['genero'] == genero:
@@ -84,6 +87,7 @@ def obtener_nuevo_id():
 
 def busqueda_por_nombre(nombre):
     # Lógica para devolver el listado de películas que tengan determinado string en el
+    nombre = unquote(nombre)
     peliculas_encontradas = []
     for pelicula in peliculas:
         if nombre.lower() in pelicula['titulo'].lower():
@@ -96,6 +100,7 @@ def sugerir_pelicula():
 
 def sugerir_por_genero(genero):
     # Lógica para sugerir una película aleatoria de un género específico
+    genero = unquote(genero)
     peliculas_posibles  = []
     for pelicula in peliculas:
         if pelicula['genero'] == genero:
@@ -109,6 +114,7 @@ def sugerir_por_genero(genero):
 
 def busqueda_por_proximo_feriado(genero):
     # Lógica para buscar el próximo feriado y devolver una recomendación de película
+    genero = unquote(genero)
     proximo_feriado = NextHoliday('todos')
     proximo_feriado.fetch_holidays()
     
