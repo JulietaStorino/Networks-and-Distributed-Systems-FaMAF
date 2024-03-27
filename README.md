@@ -80,20 +80,22 @@ Junto con el código deberá entregar una presentación (tipo powerpoint) y un v
 
 1. **Introducción al proyecto**:
 	a. Presenta brevemente el contexto del proyecto y sus objetivos.
-   b. Explica la importancia de desarrollar una API robusta y bien diseñada.
+   b. Explicar que e una API REST y como funciona
+   c. Explica la importancia de desarrollar una API robusta y bien diseñada.
 2. **Configuración del entorno e instalación de librerías**:
    a. Explica por qué es importante utilizar un entorno virtual de programación.
    b. Muestra cómo configurar un entorno virtual de Python usando *venv*.
    c. Explica cómo activar y desactivar el entorno virtual.
    d. Guía sobre la instalación de las librerías necesarias utilizando *pip*.
 3. **Creación de una API con Flask**:
-   a. Describe las funcionalidades básicas de la API a desarrollar.
-   b. Muestra cómo completaron las funcionalidades proporcionadas en el archivo *main.py*.
-   c. Explica cada una de las partes de la API y su propósito.
+   a. Describir el funcionamiento de la api proporcionada y como funciona FLASK
+   b. Describe las funcionalidades básicas de la API a desarrollar.
+   c. Muestra cómo completaron las funcionalidades proporcionadas en el archivo *main.py*.
+   d. Explica cada una de las partes de la API y su propósito.
 4. **Pruebas de la API**:
    a. Presenta las recomendaciones para probar la API utilizando *curl* o Postman.
-   b. Explica cómo realizar pruebas con *curl*.
-   c. Muestra cómo realizar pruebas con Postman y replica los mismos tests que se realizan con *curl*.
+   b. Presentar que es *curl* y explica cómo realizar pruebas con *curl*.
+   c. Presentar que es *postman* y explica cómo realizar pruebas con *Postman* y replica los mismos tests que se realizan con *curl*.
 5. **Consumo de una API externa**:
    a. Introduce la integración con la API externa de feriados.
    b. Explica cómo modificar el código existente para agregar funcionalidades relacionadas con los feriados.
