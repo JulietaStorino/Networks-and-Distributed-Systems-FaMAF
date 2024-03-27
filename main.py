@@ -92,7 +92,10 @@ def busqueda_por_nombre(nombre):
     for pelicula in peliculas:
         if nombre.lower() in pelicula['titulo'].lower():
             peliculas_encontradas.append(pelicula)
-    return peliculas_encontradas
+    if len(peliculas_encontradas) == 0:
+        return jsonify({'mensaje': 'Película no encontrada'}), 404
+    else:
+        return peliculas_encontradas
 
 def sugerir_pelicula():
     pelicula_sugerida = choice(peliculas)
