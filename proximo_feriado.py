@@ -12,7 +12,7 @@ def day_of_week(day, month, year):
     return days[date(year, month, day).weekday()]
 
 class NextHoliday:
-    def _init_(self):
+    def __init__(self):
         self.loading = True
         self.year = date.today().year
         self.holiday = None
@@ -44,7 +44,6 @@ class NextHoliday:
     def fetch_holidays(self, h_type=None):
         response = requests.get(get_url(self.year))
         data = response.json()
-        print(data)
         self.set_next(data, h_type)
 
     def render(self):
