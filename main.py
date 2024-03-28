@@ -31,7 +31,6 @@ def obtener_peliculas():
 
 
 def obtener_pelicula(id):
-    # Lógica para buscar la película por su ID y devolver sus detalles
     pelicula_encontrada = buscar_por_id(id)
     if pelicula_encontrada is None:
         return jsonify({'mensaje': 'Película no encontrada'}), 404
@@ -39,7 +38,6 @@ def obtener_pelicula(id):
 
 
 def busqueda_por_genero(genero):
-    # Lógica para devolver el listado de películas de un género específico
     genero = unquote(genero)
     peliculas_por_genero = []
     for pelicula in peliculas:
@@ -60,7 +58,6 @@ def agregar_pelicula():
 
 
 def actualizar_pelicula(id):
-    # Lógica para buscar la película por su ID y actualizar sus detalles
     pelicula_actualizada = buscar_por_id(id)
     if pelicula_actualizada is None:
         return jsonify({'mensaje': 'Película no encontrada'}), 404
@@ -71,12 +68,14 @@ def actualizar_pelicula(id):
     return jsonify(pelicula_actualizada)
 
 def eliminar_pelicula(id):
-    # Lógica para buscar la película por su ID y eliminarla
-    for pelicula in peliculas:
-        if pelicula['id'] == id:
-            peliculas.remove(pelicula)
-            return jsonify({'mensaje': 'Película eliminada correctamente'})
-    return jsonify({'mensaje': 'Película no encontrada'}), 404
+
+    pelicula = buscar_por_id(id)
+    if pelicula == none:
+        return jsonify({'mensaje': 'Película no encontrada'}), 404
+    else:
+        peliculas.remove(pelicula)
+        return jsonify({'mensaje': 'Película eliminada correctamente'})
+    
 
 def obtener_nuevo_id():
     if len(peliculas) > 0:
@@ -86,7 +85,6 @@ def obtener_nuevo_id():
         return 1
 
 def busqueda_por_nombre(nombre):
-    # Lógica para devolver el listado de películas que tengan determinado string en el
     nombre = unquote(nombre)
     peliculas_encontradas = []
     for pelicula in peliculas:
@@ -95,38 +93,35 @@ def busqueda_por_nombre(nombre):
     if len(peliculas_encontradas) == 0:
         return jsonify({'mensaje': 'Película no encontrada'}), 404
     else:
-        return peliculas_encontradas
+        return jsonify(peliculas_encontradas)
 
 def sugerir_pelicula():
     pelicula_sugerida = choice(peliculas)
     return jsonify(pelicula_sugerida)
 
 def sugerir_por_genero(genero):
-    # Lógica para sugerir una película aleatoria de un género específico
     genero = unquote(genero)
-    peliculas_posibles  = []
-    for pelicula in peliculas:
-        if pelicula['genero'] == genero:
-            peliculas_posibles.append(pelicula)
-    if len(peliculas_posibles) == 0:
-        return jsonify({'mensaje': 'Genero no encontrado'}), 404
-    else:
-        pelicula_sugerida = choice(peliculas_posibles)
-        return jsonify(pelicula_sugerida), 200
+    
+    response =  busqueda_por_genero(genero)
+    peliculas_list = response.get_json()
+    if  len(peliculas_list) == 0:
+        return jsonify({'mensaje': 'Género no encontrado'}), 404
+    pelicula_sugerida = choice(peliculas_list)
+    return jsonify(pelicula_sugerida), 200
 
 
 def busqueda_por_proximo_feriado(genero):
-    # Lógica para buscar el próximo feriado y devolver una recomendación de película
+
     genero = unquote(genero)
-    proximo_feriado = NextHoliday()
+    proximo_feriado = NextHoliday('todos')
     proximo_feriado.fetch_holidays()
     
     response = busqueda_por_genero(genero)
-    peliculas_json = response.get_json()
+    peliculas_list = response.get_json()
 
     if not peliculas_json:
         return jsonify({"error": "No hay películas para el género especificado"})
-    recomendacion = choice(peliculas_json)
+    recomendacion = choice(peliculas_list)
 
     feriado = {
         'fecha': f"{proximo_feriado.holiday['dia']}/{proximo_feriado.holiday['mes']}",
