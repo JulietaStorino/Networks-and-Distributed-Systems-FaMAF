@@ -118,7 +118,7 @@ def sugerir_por_genero(genero):
 def busqueda_por_proximo_feriado(genero):
     # Lógica para buscar el próximo feriado y devolver una recomendación de película
     genero = unquote(genero)
-    proximo_feriado = NextHoliday('todos')
+    proximo_feriado = NextHoliday()
     proximo_feriado.fetch_holidays()
     
     response = busqueda_por_genero(genero)
