@@ -70,7 +70,7 @@ def actualizar_pelicula(id):
 def eliminar_pelicula(id):
 
     pelicula = buscar_por_id(id)
-    if pelicula == none:
+    if pelicula == None:
         return jsonify({'mensaje': 'Película no encontrada'}), 404
     else:
         peliculas.remove(pelicula)
@@ -119,7 +119,7 @@ def busqueda_por_proximo_feriado(genero):
     response = busqueda_por_genero(genero)
     peliculas_list = response.get_json()
 
-    if not peliculas_json:
+    if not peliculas_list:
         return jsonify({"error": "No hay películas para el género especificado"})
     recomendacion = choice(peliculas_list)
 
