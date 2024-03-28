@@ -113,7 +113,7 @@ def sugerir_por_genero(genero):
 def busqueda_por_proximo_feriado(genero):
 
     genero = unquote(genero)
-    proximo_feriado = NextHoliday('todos')
+    proximo_feriado = NextHoliday()
     proximo_feriado.fetch_holidays()
     
     response = busqueda_por_genero(genero)
