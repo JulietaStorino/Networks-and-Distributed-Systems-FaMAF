@@ -20,9 +20,16 @@ class Server(object):
 
     def __init__(self, addr=DEFAULT_ADDR, port=DEFAULT_PORT,
                  directory=DEFAULT_DIR):
+        # Crea un socket para el servidor
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)       
+        # Inicializa los datos servidor
+        self.address = addr
+        self.port = port
+        self.directory = directory
+        # Se conecta al puerto dado
+        self.socket.bind((addr, port)) # FALTA: Ver que pasa si no puede conectarse
+
         print("Serving %s on %s:%s." % (directory, addr, port))
-        # FALTA: Crear socket del servidor, configurarlo, asignarlo
-        # a una dirección y puerto, etc.
 
     def serve(self):
         """
@@ -30,9 +37,13 @@ class Server(object):
         y se espera a que concluya antes de seguir.
         """
         while True:
-            pass
-            # FALTA: Aceptar una conexión al server, crear una
-            # Connection para la conexión y atenderla hasta que termine.
+            # Acepta una conexión al server
+            self.socket.listen(1)
+            c, a = self.socket.accept()
+            # Crea una Connection para la conexión
+            c = connection.Connection(c, self.directory)
+            # Atiende la conexión hasta que termine
+            c.handle()
 
 
 def main():
