@@ -210,11 +210,11 @@ Luego se debe cerrar y volver a abrir la terminal para seguir con los siguientes
   ```
 - Verificar que la versión de python sea la correcta:
   ```bash
-  python3 --version # Debe mostrar Python 3.6.15
+  python3.6 -V # Debe mostrar Python 3.6.15
   ```
 - Crear un entorno virtual con la versión de python 3.6.15:
   ```bash
-  virtualenv -p /home/{user}/.pyenv/versions/3.6.15/bin/python3.6 .venv # Debe reemplazar {user} por su nombre de usuario
+  python3.6 -m venv .venv #  # Debe reemplazar {user} por su nombre de usuario
   ```
 - Activar el entorno virtual:
   ```bash
