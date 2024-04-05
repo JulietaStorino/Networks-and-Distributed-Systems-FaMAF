@@ -1,3 +1,5 @@
+# Python y entornos virtuales
 __pycache__/
 .python-version
 Python-3.6.15/
+.venv/
