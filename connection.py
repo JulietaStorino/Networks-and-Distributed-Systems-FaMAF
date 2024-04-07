@@ -42,8 +42,11 @@ class Connection(object):
                 # Obtiene la línea completa
                 line, buffer = buffer.split("\r\n", 1)
                 if "\n" in line or "\r" in line:
-                    self.socket.send(f'{BAD_EOL} BAD_EOL\r\n' .encode('ascii'))
+                    mensaje = f'{BAD_EOL} BAD_EOL\r\n'
+                    mensaje = b64encode(mensaje)
+                    self.socket.send(mensaje)
                     self.close()
                     # Procesa la línea recibida
                 else:
+                    print(line)
                     parse_and_run(self, line)
