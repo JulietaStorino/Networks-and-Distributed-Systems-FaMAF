@@ -10,7 +10,16 @@ import optparse
 import socket
 import connection
 from constants import *
+import threading
 
+def handle_thread(c, directory):
+    """
+    Atiende un hilo para conectarlo. Recibe un socket aceptado y un directorio.
+    """
+    # Crea una conexión con el socket dado
+    c = connection.Connection(c, directory)
+    # Atiende la conexión hasta que termine
+    c.handle()
 
 class Server(object):
     """
@@ -26,9 +35,15 @@ class Server(object):
         self.address = addr
         self.port = port
         self.directory = directory
-        # Se conecta al puerto dado
-        self.socket.bind((addr, port)) # FALTA: Ver que pasa si no puede conectarse
-
+        # Se conecta al puerto dado y de no poder a uno libre
+        unused_port = port #FALTA: Preguntar que hacer si el puerto no está libre
+        while True:
+            try:
+                self.socket.bind((addr, unused_port))
+                break
+            except:
+                unused_port += 1
+        self.port = unused_port
         print("Serving %s on %s:%s." % (directory, addr, port))
 
     def serve(self):
@@ -40,10 +55,9 @@ class Server(object):
             # Acepta una conexión al server
             self.socket.listen(1)
             c, a = self.socket.accept()
-            # Crea una Connection para la conexión
-            c = connection.Connection(c, self.directory)
-            # Atiende la conexión hasta que termine
-            c.handle()
+            # Crea un hilo para atender la conexión
+            thread = threading.Thread(target=handle_thread, args=(c, self.directory))
+            thread.start()
 
 
 def main():
