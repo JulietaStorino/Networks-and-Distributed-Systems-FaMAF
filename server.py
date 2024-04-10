@@ -30,34 +30,37 @@ class Server(object):
     def __init__(self, addr=DEFAULT_ADDR, port=DEFAULT_PORT,
                  directory=DEFAULT_DIR):
         # Crea un socket para el servidor
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)       
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
+        self.socket.bind((addr, port))
+        self.socket.listen(5)     
         # Inicializa los datos servidor
         self.address = addr
         self.port = port
         self.directory = directory
-        # Se conecta al puerto dado y de no poder a uno libre
-        unused_port = port #FALTA: Preguntar que hacer si el puerto no está libre
-        while True:
-            try:
-                self.socket.bind((addr, unused_port))
-                break
-            except:
-                unused_port += 1
-        self.port = unused_port
-        print("Serving %s on %s:%s." % (directory, addr, port))
+        print("Serving testdata on %s:%s" % (addr, port))
 
     def serve(self):
         """
         Loop principal del servidor. Se acepta una conexión a la vez
         y se espera a que concluya antes de seguir.
         """
-        while True:
-            # Acepta una conexión al server
-            self.socket.listen(1)
-            c, a = self.socket.accept()
-            # Crea un hilo para atender la conexión
-            thread = threading.Thread(target=handle_thread, args=(c, self.directory))
-            thread.start()
+        try:
+            while True:
+                # Acepta una conexión al server
+                self.socket.listen()
+                c, a = self.socket.accept()
+                # Crea un hilo para atender la conexión
+                lock = threading.Lock() 
+                thread = threading.Thread(target=handle_thread, args=(c, self.directory))
+                thread.start()
+        except KeyboardInterrupt:
+            print("Exiting...")
+
+    def __del__(self):
+        """
+        Destructor de la clase, cierra el socket del servidor.
+        """
+        self.socket.close()
 
 
 def main():

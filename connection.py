@@ -31,7 +31,7 @@ class Connection(object):
         buffer = ""
         while not self.quit:
             # lee los datos recibidos mientras la conexion esté abierta
-            data = self.socket.recv(1024).decode("ascii")
+            data = self.socket.recv(1024).decode("utf-8")
             # Sale del bucle si no hay datos recibidos
             if not data:
                 break                
@@ -48,5 +48,5 @@ class Connection(object):
                     self.close()
                     # Procesa la línea recibida
                 else:
-                    print(line)
                     parse_and_run(self, line)
+        self.socket.close()
