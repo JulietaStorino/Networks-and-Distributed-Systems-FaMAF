@@ -2,6 +2,7 @@ import socket
 from constants import *
 import os
 import os.path
+from base64 import b64encode
 
 def validate_args(args, expected, connection):
     """
@@ -12,6 +13,7 @@ def validate_args(args, expected, connection):
         connection.socket.send(mensaje.encode("ascii"))
         return False
     return True
+
 
 def parse_and_run(connection, line):
     """
@@ -24,30 +26,51 @@ def parse_and_run(connection, line):
     args = parts[1:]
 
     if command == "get_file_listing":
-        if validate_args(len(args), 0, connection):
-            return get_file_listing(connection)
-
+        if len(args) != 0:
+            mensaje = f'{INVALID_ARGUMENTS} {error_messages[INVALID_ARGUMENTS]}\r\n'
+            mensaje = (mensaje.encode('utf-8'))
+            connection.socket.send(mensaje)
+            return 
+        
+        return get_file_listing(connection)
+    
     elif command == "get_metadata":
-        if validate_args(len(args), 1, connection):
-            filename = parts[1]
-            return get_metadata(connection, filename)
+        if len(args) != 1:
+            mensaje = f'{INVALID_ARGUMENTS} {error_messages[INVALID_ARGUMENTS]}\r\n'
+            mensaje = (mensaje.encode('utf-8'))
+            connection.socket.send(mensaje)
+            return 
+        filename = parts[1]
+        return get_metadata(connection, filename)
     
     elif command == "get_slice":
-        if validate_args(len(args), 3, connection) and parts[2].isdigit() and parts[3].isdigit():
-            filename = parts[1]
-            offset = int(parts[2])
-            size = int(parts[3])
-            return get_slice(connection, filename, offset, size)
-
+        if len(args) != 3 or not (parts[2].isdigit() and parts[3].isdigit   ()):
+            mensaje = f'{INVALID_ARGUMENTS} {error_messages[INVALID_ARGUMENTS]}\r\n'
+            mensaje = (mensaje.encode('utf-8'))
+            connection.socket.send(mensaje)
+            return 
+        
+        filename = parts[1]
+        offset = int(parts[2])
+        size = int(parts[3])
+        return get_slice(connection,filename, offset, size)
+    
     elif command == "quit":
-        if validate_args(len(args), 0, connection):
-            return quit(connection)
-
+        
+        if len(args) != 0:
+            mensaje = f'{INVALID_ARGUMENTS} {error_messages[INVALID_ARGUMENTS]}\r\n'
+            mensaje = (mensaje.encode('utf-8'))
+            connection.socket.send(mensaje)
+            return 
+        return quit(connection)
+    
     else:
-        mensaje = f'{INVALID_COMMAND} {error_messages[INVALID_COMMAND]}\r\n'
-        connection.socket.send(mensaje.encode("ascii"))
 
-    return
+        mensaje = f'{INVALID_COMMAND} {error_messages[INVALID_COMMAND]}\r\n'
+        mensaje = (mensaje.encode('utf-8'))
+        connection.socket.send(mensaje)
+        return
+
 
 def get_file_listing(connection):
     """
@@ -73,7 +96,8 @@ def get_file_listing(connection):
     mensaje += f"{EOL}"
     connection.socket.send(mensaje.encode("ascii"))
 
-def get_metadata(connection, FILENAME):#~implementar
+
+def get_metadata(connection, FILENAME):
     """
     Retorna el tamaño del archivo.
     """
@@ -116,13 +140,42 @@ def get_metadata(connection, FILENAME):#~implementar
     mensaje = f'{FILE_NOT_FOUND} {error_messages[FILE_NOT_FOUND]}\r\n'
     connection.socket.send(mensaje.encode("ascii"))
 
+
 def get_slice(connection, FILENAME, OFFSET, SIZE):
     """
     Retorna un fragmento del archivo.
     """
-    mensaje = f'{INTERNAL_ERROR} {error_messages[INTERNAL_ERROR]}\r\n'
-    connection.socket.send(mensaje.encode("ascii"))
-    return
+    # Verifica si el archivo solicitado existe
+    if  not (os.path.isfile(os.path.join(connection.directory, FILENAME))):
+        mensaje = f'{FILE_NOT_FOUND} {error_messages[FILE_NOT_FOUND]} \r\n'
+        mensaje = mensaje.encode('utf-8')
+        connection.socket.send(mensaje)
+        return
+     # verifica que no se saldra del archivo en la lectura
+    elif os.path.getsize(os.path.join(connection.directory, FILENAME)) < OFFSET + SIZE:
+        mensaje = f'{BAD_OFFSET} {error_messages[BAD_OFFSET]}\r\n'
+        mensaje = mensaje.encode('utf-8')
+        connection.socket.send(mensaje)
+        return
+    else:
+    # Redacta la confirmación de lectura
+        pathname = os.path.join(connection.directory, FILENAME)
+        mensaje = f'{CODE_OK} {error_messages[CODE_OK]}\r\n'
+        mensaje = mensaje.encode('utf-8')
+        connection.socket.send(mensaje)
+        
+    #apertura y lectura del file
+        with open(pathname, 'rb') as f:  # r = lectura, b = binario
+            f.seek(OFFSET)
+
+            mensaje = f.read(SIZE)              
+    #codificación y envio de la lectura   
+            mensaje = b64encode(mensaje)
+            connection.socket.send(mensaje)
+            mensaje = EOL.encode('utf-8')
+            connection.socket.send(mensaje)
+            return
+
 
 def quit(connection):
     """
