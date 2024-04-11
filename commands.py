@@ -2,7 +2,16 @@ import socket
 from constants import *
 import os
 import os.path
-from base64 import b64encode
+
+def validate_args(args, expected):
+    """
+    Verifica si la cantidad de argumentos es la esperada.
+    """
+    if args != expected:
+        mensaje = f'{INVALID_ARGUMENTS} {error_messages[INVALID_ARGUMENTS]}\r\n'
+        connection.socket.send(mensaje.encode("ascii"))
+        return False
+    return True
 
 def parse_and_run(connection, line):
     """
@@ -15,43 +24,30 @@ def parse_and_run(connection, line):
     args = parts[1:]
 
     if command == "get_file_listing":
-        if len(args) != 0:
-            mensaje = f'{INVALID_ARGUMENTS} {error_messages[INVALID_ARGUMENTS]}\r\n'
-            mensaje = (mensaje.encode('utf-8'))
-            connection.socket.send(mensaje)
-            return 
-        
-        return get_file_listing(connection)
-    
+        if validate_args(len(args), 0):
+            return get_file_listing(connection)
+
     elif command == "get_metadata":
-        if len(args) != 1:
-            mensaje = f'{INVALID_ARGUMENTS} {error_messages[INVALID_ARGUMENTS]}\r\n'
-            mensaje = (mensaje.encode('utf-8'))
-            connection.socket.send(mensaje)
-            return 
-        filename = parts[1]
-        return get_metadata(connection, filename)
+        if validate_args(len(args), 1):
+            filename = parts[1]
+            return get_metadata(connection, filename)
     
     elif command == "get_slice":
-        if len(args) != 3 or not (parts[2].isdigit() or parts[3].isdigits()):
-            mensaje = f'{INVALID_ARGUMENTS} {error_messages[INVALID_ARGUMENTS]}\r\n'
-            mensaje = (mensaje.encode('utf-8'))
-            connection.socket.send(mensaje)
-            return 
-        
-        filename = parts[1]
-        offset = int(parts[2])
-        size = int(parts[3])
-        return get_slice(connection,filename, offset, size)
-    
+        if validate_args(len(args), 3) and parts[2].isdigit() and parts[3].isdigit():
+            filename = parts[1]
+            offset = int(parts[2])
+            size = int(parts[3])
+            return get_slice(connection, filename, offset, size)
+
     elif command == "quit":
-        print("quit")
-        if len(args) != 0:
-            mensaje = f'{INVALID_ARGUMENTS} {error_messages[INVALID_ARGUMENTS]}\r\n'
-            mensaje = (mensaje.encode('utf-8'))
-            connection.socket.send(mensaje)
-            return 
-        return quit(connection)
+        if validate_args(len(args), 0):
+            return quit(connection)
+
+    else:
+        mensaje = f'{INVALID_COMMAND} {error_messages[INVALID_COMMAND]}\r\n'
+        connection.socket.send(mensaje.encode("ascii"))
+
+    return
 
 def get_file_listing(connection):
     """
@@ -132,6 +128,5 @@ def quit(connection):
     """
     connection.quit = True
     mensaje = f'{CODE_OK} {error_messages[CODE_OK]}\r\n'
-    mensaje = mensaje.encode('utf-8')
-    connection.socket.send(b64encode(mensaje))
+    connection.socket.send(mensaje.encode("ascii"))
     return
