@@ -44,7 +44,7 @@ class Connection(object):
                 line, buffer = buffer.split(r"\r\n", 1)
                 # Sale del bucle si la línea es incorrecta
                 if r"\n" in line or r"\r" in line:
-                    mensaje = f'{BAD_EOL} BAD_EOL\r\n'
+                    mensaje = f'{BAD_EOL} {error_messages[BAD_EOL]}\r\n'
                     self.socket.send(mensaje.encode("ascii"))
                     break
                 else:

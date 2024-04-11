@@ -60,16 +60,14 @@ def get_file_listing(connection):
     if not os.path.exists(connection.directory): # FALTA: Ver que pasa si el directorio no existe
         # Si el directorio no existe envía un mensaje de error
         mensaje = f'{FILE_NOT_FOUND} {error_messages[FILE_NOT_FOUND]}\r\n'
-        mensaje = (mensaje)
-        connection.socket.send(mensaje)
+        connection.socket.send(mensaje.encode("ascii"))
         return
     # Lista los archivos del directorio
     try:
         files = os.listdir(connection.directory)
     except:
         mensaje = f'{INTERNAL_ERROR} {error_messages[INTERNAL_ERROR]}\r\n'
-        mensaje = (mensaje)
-        connection.socket.send(mensaje)
+        connection.socket.send(mensaje.encode("ascii"))
         return
     # Redacta la confirmación de lectura
     mensaje = f'{CODE_OK} {error_messages[CODE_OK]}\r\n'
@@ -77,8 +75,7 @@ def get_file_listing(connection):
     for file in files:
         mensaje += file + b'\r\n'
     mensaje += b'\r\n'
-    mensaje = (mensaje)
-    connection.socket.send(mensaje)
+    connection.socket.send(mensaje.encode("ascii"))
 
 def get_metadata(connection, FILENAME):#~implementar
     """
