@@ -87,18 +87,21 @@ def get_metadata(connection, FILENAME):#~implementar
     # Lista los archivos del directorio
     try:
         files = os.listdir(connection.directory)
-    except:
-        mensaje = f'{INTERNAL_ERROR} {error_messages[INTERNAL_ERROR]}\r\n'
-        connection.socket.send(mensaje.encode("ascii"))
-        return
+    except FileNotFoundError:
+        print(f"The directory {connection.directory} does not exist.")
+    except TypeError:
+        print(f"The directory path is not a string: {connection.directory}")
+    except PermissionError:
+        print(f"Insufficient permissions to access the directory: {connection.directory}")
 
     # Verifica si el archivo solicitado existe
     for file in files:
         if file == FILENAME:
             # Obtiene el tamaño del archivo
             try:
-                size = os.path.getsize(file)
+                size = os.path.getsize(os.path.join(connection.directory, file))
             except:
+                print("O entra acá\n")
                 mensaje = f'{INTERNAL_ERROR} {error_messages[INTERNAL_ERROR]}\r\n'
                 connection.socket.send(mensaje.encode("ascii"))
                 return
