@@ -3,7 +3,7 @@ from constants import *
 import os
 import os.path
 
-def validate_args(args, expected):
+def validate_args(args, expected, connection):
     """
     Verifica si la cantidad de argumentos es la esperada.
     """
@@ -24,23 +24,23 @@ def parse_and_run(connection, line):
     args = parts[1:]
 
     if command == "get_file_listing":
-        if validate_args(len(args), 0):
+        if validate_args(len(args), 0, connection):
             return get_file_listing(connection)
 
     elif command == "get_metadata":
-        if validate_args(len(args), 1):
+        if validate_args(len(args), 1, connection):
             filename = parts[1]
             return get_metadata(connection, filename)
     
     elif command == "get_slice":
-        if validate_args(len(args), 3) and parts[2].isdigit() and parts[3].isdigit():
+        if validate_args(len(args), 3, connection) and parts[2].isdigit() and parts[3].isdigit():
             filename = parts[1]
             offset = int(parts[2])
             size = int(parts[3])
             return get_slice(connection, filename, offset, size)
 
     elif command == "quit":
-        if validate_args(len(args), 0):
+        if validate_args(len(args), 0, connection):
             return quit(connection)
 
     else:
@@ -69,8 +69,8 @@ def get_file_listing(connection):
     mensaje = f'{CODE_OK} {error_messages[CODE_OK]}\r\n'
     # Redacta la lista de archivos
     for file in files:
-        mensaje += file + b'\r\n'
-    mensaje += b'\r\n'
+        mensaje += f"{file} {EOL}"
+    mensaje += f"{EOL}"
     connection.socket.send(mensaje.encode("ascii"))
 
 def get_metadata(connection, FILENAME):#~implementar
@@ -81,8 +81,7 @@ def get_metadata(connection, FILENAME):#~implementar
     if not os.path.exists(connection.directory):
         # Si el directorio no existe envía un mensaje de error
         mensaje = f'{FILE_NOT_FOUND} {error_messages[FILE_NOT_FOUND]}\r\n'
-        mensaje = (mensaje)
-        connection.socket.send(mensaje)
+        connection.socket.send(mensaje.encode("ascii"))
         return
     
     # Lista los archivos del directorio
@@ -90,8 +89,7 @@ def get_metadata(connection, FILENAME):#~implementar
         files = os.listdir(connection.directory)
     except:
         mensaje = f'{INTERNAL_ERROR} {error_messages[INTERNAL_ERROR]}\r\n'
-        mensaje = (mensaje)
-        connection.socket.send(mensaje)
+        connection.socket.send(mensaje.encode("ascii"))
         return
 
     # Verifica si el archivo solicitado existe
@@ -102,25 +100,26 @@ def get_metadata(connection, FILENAME):#~implementar
                 size = os.path.getsize(file)
             except:
                 mensaje = f'{INTERNAL_ERROR} {error_messages[INTERNAL_ERROR]}\r\n'
-                mensaje = (mensaje)
-                connection.socket.send(mensaje)
+                connection.socket.send(mensaje.encode("ascii"))
                 return
             mensaje = f'{CODE_OK} {error_messages[CODE_OK]}\r\n'
             mensaje += f'{size}\r\n'
 
             # Codifica el mensaje en base64 y lo envía
-            mensaje = (mensaje)
-            connection.socket.send(mensaje)
+            connection.socket.send(mensaje.encode("ascii"))
             return
         
     # Si el archivo no existe envía un mensaje de error
     mensaje = f'{FILE_NOT_FOUND} {error_messages[FILE_NOT_FOUND]}\r\n'
+    connection.socket.send(mensaje.encode("ascii"))
 
 def get_slice(connection, FILENAME, OFFSET, SIZE):
     """
     Retorna un fragmento del archivo.
     """
-    
+    mensaje = f'{INTERNAL_ERROR} {error_messages[INTERNAL_ERROR]}\r\n'
+    connection.socket.send(mensaje.encode("ascii"))
+    return
 
 def quit(connection):
     """

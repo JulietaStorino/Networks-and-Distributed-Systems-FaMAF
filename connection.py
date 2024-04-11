@@ -30,8 +30,7 @@ class Connection(object):
         buffer = ""
         while not self.quit:
             # lee los datos recibidos mientras la conexion esté abierta
-            data = self.socket.recv(1024)
-            data  = data.decode("ascii")
+            data = self.socket.recv(1024).decode("ascii")
             # Sale del bucle si no hay datos recibidos
             if not data:
                 mensaje = f'{INTERNAL_ERROR} {error_messages[INTERNAL_ERROR]}\r\n'
@@ -40,13 +39,13 @@ class Connection(object):
             # Agrega los datos al buffer
             buffer += data
             # Si hay, obtiene una línea completa y la procesa
-            if r"\r\n" in buffer:
-                line, buffer = buffer.split(r"\r\n", 1)
+            if EOL in buffer:
+                line, buffer = buffer.split(EOL, 1)
                 # Sale del bucle si la línea es incorrecta
-                if r"\n" in line or r"\r" in line:
+                if NL in line:
                     mensaje = f'{BAD_EOL} {error_messages[BAD_EOL]}\r\n'
                     self.socket.send(mensaje.encode("ascii"))
                     break
                 else:
-                    parse_and_run(self, line)
+                    parse_and_run(self, line.strip())
         self.socket.close()

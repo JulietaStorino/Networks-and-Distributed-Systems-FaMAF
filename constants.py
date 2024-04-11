@@ -11,7 +11,7 @@ DEFAULT_PORT = 19500
 
 
 EOL = '\r\n'
-
+NL = '\n'
 
 CODE_OK = 0
 BAD_EOL = 100
