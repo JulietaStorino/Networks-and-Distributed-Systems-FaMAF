@@ -5,7 +5,6 @@
 
 import socket
 from constants import *
-from base64 import b64encode
 from commands import parse_and_run
 
 class Connection(object):
@@ -31,22 +30,23 @@ class Connection(object):
         buffer = ""
         while not self.quit:
             # lee los datos recibidos mientras la conexion esté abierta
-            data = self.socket.recv(1024).decode("utf-8")
+            data = self.socket.recv(1024)
+            data  = data.decode("ascii")
             # Sale del bucle si no hay datos recibidos
             if not data:
-                break                
+                mensaje = f'{INTERNAL_ERROR} {error_messages[INTERNAL_ERROR]}\r\n'
+                self.socket.send(mensaje.encode("ascii")) 
+                break
             # Agrega los datos al buffer
             buffer += data
-            # Verifica si el buffer contiene una línea completa
-            if "\r\n" in buffer:
-                # Obtiene la línea completa
-                line, buffer = buffer.split("\r\n", 1)
-                if "\n" in line or "\r" in line:
+            # Si hay, obtiene una línea completa y la procesa
+            if r"\r\n" in buffer:
+                line, buffer = buffer.split(r"\r\n", 1)
+                # Sale del bucle si la línea es incorrecta
+                if r"\n" in line or r"\r" in line:
                     mensaje = f'{BAD_EOL} BAD_EOL\r\n'
-                    mensaje = b64encode(mensaje)
-                    self.socket.send(mensaje)
-                    self.close()
-                    # Procesa la línea recibida
+                    self.socket.send(mensaje.encode("ascii"))
+                    break
                 else:
                     parse_and_run(self, line)
         self.socket.close()
