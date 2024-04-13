@@ -6,6 +6,7 @@
 # Copyright 2008-2010 Natalia Bidart y Daniel Moisset
 # $Id: server.py 656 2013-03-18 23:49:11Z bc $
 
+import os
 import optparse
 import socket
 import connection
@@ -32,7 +33,10 @@ class Server(object):
         # Crea un socket para el servidor
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
         self.socket.bind((addr, port))
-        self.socket.listen(5)     
+        self.socket.listen(5)    
+        # crea el directorio en caso de no existir
+        if not os.path.isdir(directory):
+            os.mkdir(directory)
         # Inicializa los datos servidor
         self.address = addr
         self.port = port
