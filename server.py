@@ -41,7 +41,7 @@ class Server(object):
         self.address = addr
         self.port = port
         self.directory = directory
-        print("Serving testdata on %s:%s" % (addr, port))
+        print("Running File Server on port %d" % port)
 
     def serve(self):
         """
@@ -55,6 +55,7 @@ class Server(object):
                 c, a = self.socket.accept()
                 # Crea un hilo para atender la conexión
                 lock = threading.Lock() 
+                print("Connection by: (%s, %d)" % (a[0], a[1]))
                 thread = threading.Thread(target=handle_thread, args=(c, self.directory))
                 thread.start()
         except KeyboardInterrupt:

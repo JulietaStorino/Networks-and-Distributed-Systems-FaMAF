@@ -47,5 +47,8 @@ class Connection(object):
                     self.socket.send(mensaje.encode("ascii"))
                     break
                 else:
+                    print(f"Request: {line}")
                     parse_and_run(self, line.strip())
+        
+        print("Closing connection")
         self.socket.close()
