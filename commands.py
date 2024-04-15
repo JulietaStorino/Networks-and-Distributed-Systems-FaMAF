@@ -61,7 +61,7 @@ def parse_and_run(connection, line):
             mensaje = f'{INVALID_ARGUMENTS} {error_messages[INVALID_ARGUMENTS]}\r\n'
             mensaje = (mensaje.encode('utf-8'))
             connection.socket.send(mensaje)
-            return 
+            return
         return quit(connection)
     
     else:
@@ -94,6 +94,8 @@ def get_file_listing(connection):
     for file in files:
         mensaje += f"{file} {EOL}"
     mensaje += f"{EOL}"
+
+    print("Request: get_file_listing")
     connection.socket.send(mensaje.encode("ascii"))
 
 
@@ -125,7 +127,6 @@ def get_metadata(connection, FILENAME):
             try:
                 size = os.path.getsize(os.path.join(connection.directory, file))
             except:
-                print("O entra acá\n")
                 mensaje = f'{INTERNAL_ERROR} {error_messages[INTERNAL_ERROR]}\r\n'
                 connection.socket.send(mensaje.encode("ascii"))
                 return
@@ -133,6 +134,7 @@ def get_metadata(connection, FILENAME):
             mensaje += f'{size}\r\n'
 
             # Codifica el mensaje en base64 y lo envía
+            print("Request: get_metadata", FILENAME)
             connection.socket.send(mensaje.encode("ascii"))
             return
         
@@ -145,6 +147,7 @@ def get_slice(connection, FILENAME, OFFSET, SIZE):
     """
     Retorna un fragmento del archivo.
     """
+    print("Request: get_slice", FILENAME, OFFSET, SIZE)
     # Verifica si el archivo solicitado existe
     if  not (os.path.isfile(os.path.join(connection.directory, FILENAME))):
         mensaje = f'{FILE_NOT_FOUND} {error_messages[FILE_NOT_FOUND]} \r\n'
@@ -183,5 +186,6 @@ def quit(connection):
     """
     connection.quit = True
     mensaje = f'{CODE_OK} {error_messages[CODE_OK]}\r\n'
+    print("Request: quit")
     connection.socket.send(mensaje.encode("ascii"))
     return
