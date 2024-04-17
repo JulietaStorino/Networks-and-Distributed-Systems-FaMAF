@@ -54,7 +54,6 @@ class Server(object):
                 self.socket.listen()
                 c, a = self.socket.accept()
                 # Crea un hilo para atender la conexión
-                lock = threading.Lock() 
                 print("Connection by: (%s, %d)" % (a[0], a[1]))
                 thread = threading.Thread(target=handle_thread, args=(c, self.directory))
                 thread.start()
