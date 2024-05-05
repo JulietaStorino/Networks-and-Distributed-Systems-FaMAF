@@ -1,13 +1,11 @@
 #Archivos generados por omnet++ que no se encuentran en el kickstarter
-Generator.cc
 Makefile
 lab3-kickstarter
-results/General-#0.*
+results/
 .qtenvrc
 General.anf
 out/clang-release/
-results/Generator.cc
-.settings/
+.metadata
 
 #Archivo de asignación de tareas
 TAREAS.md
