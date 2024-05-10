@@ -52,7 +52,7 @@ void Queue::handleMessage(cMessage *msg) {
         // if packet in buffer, send next one
         if (!buffer.isEmpty()) {
             // dequeue packet
-            cMessage *pkt = (cMessage*) buffer.pop();
+            cPacket *pkt = (cPacket*) buffer.pop();
             // send packet
             send(pkt, "out");
             // start new service
@@ -60,7 +60,7 @@ void Queue::handleMessage(cMessage *msg) {
             scheduleAt(simTime() + serviceTime, endServiceEvent);
         }
     } else { // if msg is a data packet
-        if (buffer.getLength() >= par("bufferSize").longValue()) {
+        if (buffer.getLength() >= par("bufferSize").intValue()) {
             // drop the packet
             delete msg;
             this->bubble("packet dropped");
