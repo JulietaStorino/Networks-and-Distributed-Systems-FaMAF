@@ -50,35 +50,89 @@ Para analizar el modelo inicial, realizamos varias configuraciones. Primero, est
 Así podemos presentar dos casos de estudio que se centran en variar la tasa de datos en las conexiones de salida de la cola en los módulos. En el primer caso de estudio, la tasa de datos se establece en 0.5 Mbps. Esto representa una situación en la que la red tiene una capacidad de transmisión de datos relativamente baja. En el segundo caso de estudio, la tasa de datos se incrementa a 1 Mbps. Este caso representa una situación en la que la red tiene una mayor capacidad de transmisión de datos. Es importante destacar que, aparte de la tasa de datos, todos los demás parámetros se mantienen constantes en ambos casos de estudio. Esto permite que cualquier diferencia observada en el comportamiento de la red pueda atribuirse directamente a la variación en la tasa de datos.
 
 ### Simulación del Modelo Inicial:
+#### Caso 1:
 <p align="center">
-  <img src="https://i.ibb.co/XyV8Xfd/Packet-Drop-in-Network-Node-Rx-Queue.png" alt="Packet-Drop-in-Network-Node-Rx-Queue">
+  <img src="https://i.ibb.co/2tB35kG/Number-Of-Packets-in-Network-Node-Rx-Sink.png" alt="Number-Of-Packets-in-Network-Node-Rx-Sink" width="500">
+  <br>
+  <em>Número de paquetes en el nodo de red Rx Sink</em>
 </p>
 
 <p align="center">
-  <img src="https://i.ibb.co/zsnGGYW/Number-Of-Packets-in-Network-Node-Rx-Sink.png" alt="Number-Of-Packets-in-Network-Node-Rx-Sink">
+  <img src="https://i.ibb.co/H45VNpx/Delay-in-Network-Node-Rx-Sink.png" alt="Delay-in-Network-Node-Rx-Sink" width="500">
+  <br>
+  <em>Retraso en el nodo de red Rx Sink</em>
 </p>
 
 <p align="center">
-  <img src="https://i.ibb.co/m6q0gwR/Delay-in-Network-Node-Rx-Sink.png" alt="Delay-in-Network-Node-Rx-Sink">
+  <img src="https://i.ibb.co/54wLM69/Buffer-Size-in-Network-Queue.png" alt="Buffer-Size-in-Network-Queue" width="500">
+  <br>
+  <em>Tamaño del buffer en la cola de red</em>
 </p>
 
 <p align="center">
-  <img src="https://i.ibb.co/L9kzLhF/Buffer-Size-in-Network-Queue.png" alt="Buffer-Size-in-Network-Queue">
+  <img src="https://i.ibb.co/ZG8X2Q2/Buffer-Size-in-Network-Node-Tx-Queue.png" alt="Buffer-Size-in-Network-Node-Tx-Queue" width="500">
+  <br>
+  <em>Tamaño del buffer en el nodo de red Tx Queue</em>
 </p>
 
 <p align="center">
-  <img src="https://i.ibb.co/k66x6c4/Buffer-Size-in-Network-Node-Tx-Queue.png" alt="Buffer-Size-in-Network-Node-Tx-Queue">
+  <img src="https://i.ibb.co/XYWbNRK/Buffer-Size-in-Network-Node-Rx-Queue.png" alt="Buffer-Size-in-Network-Node-Rx-Queue" width="500">
+  <br>
+  <em>Tamaño del buffer en el nodo de red Rx Queue</em>
 </p>
 
 <p align="center">
-  <img src="https://i.ibb.co/M2hsvTs/Buffer-Size-in-Network-Node-Rx-Queue.png" alt="Buffer-Size-in-Network-Node-Rx-Queue">
+  <img src="https://i.ibb.co/pRBRzNs/Average-Delay-in-Network-Node-Rx-Sink.png" alt="Average-Delay-in-Network-Node-Rx-Sink" width="500">
+  <br>
+  <em>Retraso promedio en el nodo de red Rx Sink</em>
 </p>
 
+#### Caso 2:
 <p align="center">
-  <img src="https://i.ibb.co/7YBjqw9/Average-Delay-in-Network-Node-Rx-Sink.png" alt="Average-Delay-in-Network-Node-Rx-Sink">
+  <img src="https://i.ibb.co/prSxkyj/Packet-Drop-in-Network-Node-Rx-Queue-2.png" alt="Packet-Drop-in-Network-Node-Rx-Queue" width="500">
+  <br>
+  <em>Caída de paquetes en el nodo de red Rx Queue</em>
+</p>
+<p align="center">
+  <img src="https://i.ibb.co/2tB35kG/Number-Of-Packets-in-Network-Node-Rx-Sink-2.png" alt="Number-Of-Packets-in-Network-Node-Rx-Sink" width="500">
+  <br>
+  <em>Número de paquetes en el nodo de red Rx Sink</em>
+</p>
+<p align="center">
+  <img src="https://i.ibb.co/H45VNpx/Delay-in-Network-Node-Rx-Sink-2.png" alt="Delay-in-Network-Node-Rx-Sink" width="500">
+  <br>
+  <em>Retraso en el nodo de red Rx Sink</em>
+</p>
+<p align="center">
+  <img src="https://i.ibb.co/54wLM69/Buffer-Size-in-Network-Queue-2.png" alt="Buffer-Size-in-Network-Queue" width="500">
+  <br>
+  <em>Tamaño del buffer en la cola de red</em>
+</p>
+<p align="center">
+  <img src="https://i.ibb.co/ZG8X2Q2/Buffer-Size-in-Network-Node-Tx-Queue-2.png" alt="Buffer-Size-in-Network-Node-Tx-Queue" width="500">
+  <br>
+  <em>Tamaño del buffer en el nodo de red Tx Queue</em>
+</p>
+<p align="center">
+  <img src="https://i.ibb.co/XYWbNRK/Buffer-Size-in-Network-Node-Rx-Queue-2.png" alt="Buffer-Size-in-Network-Node-Rx-Queue" width="500">
+  <br>
+  <em>Tamaño del buffer en el nodo de red Rx Queue</em>
+</p>
+<p align="center">
+  <img src="https://i.ibb.co/pRBRzNs/Average-Delay-in-Network-Node-Rx-Sink-2.png" alt="Average-Delay-in-Network-Node-Rx-Sink" width="500">
+  <br>
+  <em>Retraso promedio en el nodo de red Rx Sink</em>
 </p>
 
+### Análisis del Modelo Inicial:
+Se realizó un análisis comparativo entre las tres colas (Queues) para identificar posibles problemas. Inicialmente, se estableció un generationInterval de 1, pero no se detectó pérdida de paquetes. Intuitivamente, asumimos que no habría problemas en este escenario, ya que en una simulación de 200 segundos se envían 200 paquetes cada segundo en colas con una capacidad de 200. Decidimos probar con un generationInterval de 0.1 y descubrimos que en ambos casos los paquetes no se procesan de manera "lineal", ya que se produce una pérdida de paquetes durante el proceso.
 
+Por lo tanto, para cada escenario, comparamos las colas para identificar dónde se produce el cuello de botella.
 
+Es importante mencionar que en los dos escenarios, la cola de nodeTx no presentará problemas, ya que tiene una capacidad suficientemente grande para que no se llene en una simulación de 200 segundos. Por lo tanto, este gráfico representa los dos casos, aunque la tarea requería una comparación con las tres colas.
 
+#### Caso 1:
+En este escenario, notamos que los paquetes llegan, pero no todos pueden ser procesados. Identificamos un cuello de botella en el nodeRx, lo que indica un problema de flujo. En este caso, la tasa de transferencia es menor de lo que la red y el nodo transmisor podrían manejar, lo que sobrecarga al nodo receptor y provoca la eliminación de paquetes.
 
+#### Caso 2:
+En este escenario, observamos que el cuello de botella se encuentra en la red, lo que indica un problema de congestión. Al igual que en el caso anterior, vemos que la tasa de transferencia es más baja en la red, lo que resulta en una cola que se satura y comienza a eliminar paquetes, ya que la tasa de transferencia en el "camino" entre este y el nodo receptor es pequeña.
