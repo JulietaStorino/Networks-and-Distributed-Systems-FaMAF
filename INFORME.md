@@ -167,6 +167,21 @@ Para ambas clases decidimos utilizar un mecanismo de retroalimentación para evi
 </p>
 
 #### Caso 2:
+<p align="center">
+  <img src="images/delay-c2.png" alt="Modelo Inicial">
+</p>
+
+<p align="center">
+  <img src="images/queue1-c2.png" alt="Modelo Inicial">
+</p>
+
+<p align="center">
+  <img src="images/queuetx-c2.png" alt="Modelo Inicial">
+</p>
+
+<p align="center">
+  <img src="images/queuerx-c2.png" alt="Modelo Inicial">
+</p>
 ### Análisis del Nuevo Modelo:
 
 ## Conclusiones
