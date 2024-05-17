@@ -149,6 +149,23 @@ Para ambas clases decidimos utilizar un mecanismo de retroalimentación para evi
 ## Resultados
 ### Simulación del Nuevo Modelo:
 #### Caso 1:
+
+<p align="center">
+  <img src="images/delay.png" alt="Modelo Inicial">
+</p>
+
+<p align="center">
+  <img src="images/queue1.png" alt="Modelo Inicial">
+</p>
+
+<p align="center">
+  <img src="images/TraTx.png" alt="Modelo Inicial">
+</p>
+
+<p align="center">
+  <img src="images/traRx.png" alt="Modelo Inicial">
+</p>
+
 #### Caso 2:
 ### Análisis del Nuevo Modelo:
 
