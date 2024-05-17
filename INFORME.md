@@ -33,7 +33,7 @@ Para cumplir con los objetivos propuestos, se plantean los siguientes pasos:
 Nuestro diseño inicial se basa en un sistema de colas que consta de un generador y un receptor conectados a través de un nodo intermedio.
 
 <p align="center">
-  <img src="images/output.png" alt="Modelo Inicial">
+  <img src="images/Aspose.Words.d6503f12-2ab0-4f63-a0c0-ce95ff653ddd.002.png" alt="Modelo Inicial">
 </p>
 
 En nuestro sistema, los módulos NodeTx y NodeRx actúan como el emisor y receptor respectivamente.
@@ -87,41 +87,61 @@ Así podemos presentar dos casos de estudio que se centran en variar la tasa de 
   <em>Retraso promedio en el nodo de red Rx Sink</em>
 </p>
 
+<p align="center">
+  <img src="images/CargaUtilAnalisisCaso1.png"
+  alt="Offered-load-vs-useful-load" width="500">
+  <br>
+  <em>Carga ofrecida vs Carca útil</em>
+</p>
+
 #### Caso 2:
 <p align="center">
   <img src="https://i.ibb.co/prSxkyj/Packet-Drop-in-Network-Node-Rx-Queue-2.png" alt="Packet-Drop-in-Network-Node-Rx-Queue" width="500">
   <br>
   <em>Caída de paquetes en el nodo de red Rx Queue</em>
 </p>
+
 <p align="center">
   <img src="https://i.ibb.co/2tB35kG/Number-Of-Packets-in-Network-Node-Rx-Sink-2.png" alt="Number-Of-Packets-in-Network-Node-Rx-Sink" width="500">
   <br>
   <em>Número de paquetes en el nodo de red Rx Sink</em>
 </p>
+
 <p align="center">
   <img src="https://i.ibb.co/H45VNpx/Delay-in-Network-Node-Rx-Sink-2.png" alt="Delay-in-Network-Node-Rx-Sink" width="500">
   <br>
   <em>Retraso en el nodo de red Rx Sink</em>
 </p>
+
 <p align="center">
   <img src="https://i.ibb.co/54wLM69/Buffer-Size-in-Network-Queue-2.png" alt="Buffer-Size-in-Network-Queue" width="500">
   <br>
   <em>Tamaño del buffer en la cola de red</em>
 </p>
+
 <p align="center">
   <img src="https://i.ibb.co/ZG8X2Q2/Buffer-Size-in-Network-Node-Tx-Queue-2.png" alt="Buffer-Size-in-Network-Node-Tx-Queue" width="500">
   <br>
   <em>Tamaño del buffer en el nodo de red Tx Queue</em>
 </p>
+
 <p align="center">
   <img src="https://i.ibb.co/XYWbNRK/Buffer-Size-in-Network-Node-Rx-Queue-2.png" alt="Buffer-Size-in-Network-Node-Rx-Queue" width="500">
   <br>
   <em>Tamaño del buffer en el nodo de red Rx Queue</em>
 </p>
+
 <p align="center">
   <img src="https://i.ibb.co/pRBRzNs/Average-Delay-in-Network-Node-Rx-Sink-2.png" alt="Average-Delay-in-Network-Node-Rx-Sink" width="500">
   <br>
   <em>Retraso promedio en el nodo de red Rx Sink</em>
+</p>
+
+<p align="center">
+  <img src="images/CargaUtilAnalisisCaso2.png"
+  alt="Offered-load-vs-useful-load" width="500">
+  <br>
+  <em>Carga ofrecida vs Carca útil</em>
 </p>
 
 ### Análisis del Modelo Inicial:
@@ -137,12 +157,6 @@ En este escenario, notamos que los paquetes llegan, pero no todos pueden ser pro
 #### Caso 2:
 En este escenario, observamos que el cuello de botella se encuentra en la red, lo que indica un problema de congestión. Al igual que en el caso anterior, vemos que la tasa de transferencia es más baja en la red, lo que resulta en una cola que se satura y comienza a eliminar paquetes, ya que la tasa de transferencia en el "camino" entre este y el nodo receptor es pequeña.
 
-### Experimentos y Preguntas:
-  En el presente estudio, se llevarán a cabo simulaciones paramétricas para analizar el comportamiento de sistemas de colas en diferentes escenarios de tráfico de red. Estas simulaciones se enfocarán en variar el intervalo de generación de paquetes (generationInterval) en un rango de 0.1 a 1 segundos con pasos de 0.1 .
-  El objetivo principal es evaluar la utilización de tres colas diferentes bajo diversos patrones de tráfico. Para ello, se generarán gráficos representativos que ilustren la utilización de cada cola en los escenarios de estudio seleccionados. Por otro lado se incluye una gráfica de carga transmitida (eje x) versus carga recibida (eje y), ambas expresadas en paquetes por segundo.
-![](images/CargaUtilAnalisisCaso1.png)
-![](images/CargaUtilAnalisisCaso2.png)
-  Se puede notar que en ambos casos la relacion entre carga ofrecida y carga útil es identida. 
 
 ### Diseño de Estrategias de Control de Flujo y Congestión:
 Para abordar los problemas identificados en el modelo inicial, proponemos un nuevo diseño que incorpora estrategias de control de flujo y congestión. En particular, implementamos dos clases nuevas: 
@@ -155,41 +169,59 @@ Para ambas clases decidimos utilizar un mecanismo de retroalimentación para evi
 
 ## Resultados
 ### Simulación del Nuevo Modelo:
-#### Caso 1:
 
 <p align="center">
-  <img src="images/delay.png" alt="Modelo Inicial">
+  <img src="images/delay.png"
+  alt="delay" width="500">
+  <br>
+  <em>Retraso en el nodo de red Rx Sink</em>
 </p>
 
 <p align="center">
-  <img src="images/queue1.png" alt="Modelo Inicial">
+  <img src="images/queue1.png" alt="queue1" width="500">
+  <br>
+  <em>Cantidad de paquetes en la cola Queue1</em>
 </p>
 
 <p align="center">
-  <img src="images/TraTx.png" alt="Modelo Inicial">
+  <img src="images/TraTx.png" alt="TraTx" width="500">
+  <br>
+  <em>Cantidad de paquetes en la cola TransportTx</em>
 </p>
 
 <p align="center">
-  <img src="images/traRx.png" alt="Modelo Inicial">
+  <img src="images/traRx.png" alt="traRx" width="500">
+  <br>
+  <em>Cantidad de paquetes en la cola TransportRx</em>
 </p>
 
 #### Caso 2:
 <p align="center">
-  <img src="images/delay-c2.png" alt="Modelo Inicial">
+  <img src="images/delay-c2.png" alt="delay" width="500">
+  <br>
+  <em>Retraso en el nodo de red Rx Sink</em>
 </p>
 
 <p align="center">
-  <img src="images/queue1-c2.png" alt="Modelo Inicial">
+  <img src="images/queue1-c2.png" alt="queue1" width="500">
+  <br>
+  <em>Cantidad de paquetes en la cola Queue1</em>
 </p>
 
 <p align="center">
-  <img src="images/queuetx-c2.png" alt="Modelo Inicial">
+  <img src="images/queuetx-c2.png" alt="queuetx" width="500">
+  <br>
+  <em>Cantidad de paquetes en la cola TransportTx</em>
 </p>
 
 <p align="center">
-  <img src="images/queuerx-c2.png" alt="Modelo Inicial">
+  <img src="images/queuerx-c2.png" alt="queuerx" width="500">
+  <br>
+  <em>Cantidad de paquetes en la cola TransportRx</em>
 </p>
+
 ### Análisis del Nuevo Modelo:
+En la gráfica del número de paquetes en el nodo de red Rx podemos observar picos que provienen de evitar la saturación del buffer del receptor, y por consecuencia la pérdida de paquetes. Se produce una disminución en la entrada de paquetes cada vez que el buffer del receptor llega al 75% de su capacidad, lo que indica que el mecanismo de retroalimentación está funcionando correctamente.
 
 ## Conclusiones
 En este trabajo, hemos analizado el tráfico de red y diseñado estrategias de control de flujo y congestión para mejorar el rendimiento del sistema. A través de simulaciones en OMNeT++, hemos evaluado el comportamiento de un modelo de colas en un entorno simulado y hemos propuesto un nuevo diseño que incorpora estrategias de control de flujo y congestión. Los resultados obtenidos muestran que las estrategias de control de flujo y congestión propuestas son efectivas para evitar la pérdida de datos por saturación de buffers y mejorar el rendimiento del sistema. En particular, hemos observado que el uso de mecanismos de retroalimentación para regular la velocidad de transmisión de datos entre el emisor y el receptor es una estrategia efectiva para evitar la sobrecarga del receptor y minimizar la pérdida de datos.
