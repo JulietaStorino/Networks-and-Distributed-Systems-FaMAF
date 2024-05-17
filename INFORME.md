@@ -137,6 +137,13 @@ En este escenario, notamos que los paquetes llegan, pero no todos pueden ser pro
 #### Caso 2:
 En este escenario, observamos que el cuello de botella se encuentra en la red, lo que indica un problema de congestión. Al igual que en el caso anterior, vemos que la tasa de transferencia es más baja en la red, lo que resulta en una cola que se satura y comienza a eliminar paquetes, ya que la tasa de transferencia en el "camino" entre este y el nodo receptor es pequeña.
 
+### Experimentos y Preguntas:
+  En el presente estudio, se llevarán a cabo simulaciones paramétricas para analizar el comportamiento de sistemas de colas en diferentes escenarios de tráfico de red. Estas simulaciones se enfocarán en variar el intervalo de generación de paquetes (generationInterval) en un rango de 0.1 a 1 segundos con pasos de 0.1 .
+  El objetivo principal es evaluar la utilización de tres colas diferentes bajo diversos patrones de tráfico. Para ello, se generarán gráficos representativos que ilustren la utilización de cada cola en los escenarios de estudio seleccionados. Por otro lado se incluye una gráfica de carga transmitida (eje x) versus carga recibida (eje y), ambas expresadas en paquetes por segundo.
+![](images/CargaUtilAnalisisCaso1.png)
+![](images/CargaUtilAnalisisCaso2.png)
+  Se puede notar que en ambos casos la relacion entre carga ofrecida y carga útil es identida. 
+
 ### Diseño de Estrategias de Control de Flujo y Congestión:
 Para abordar los problemas identificados en el modelo inicial, proponemos un nuevo diseño que incorpora estrategias de control de flujo y congestión. En particular, implementamos dos clases nuevas: 
 
