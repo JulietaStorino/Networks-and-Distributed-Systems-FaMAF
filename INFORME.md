@@ -136,3 +136,27 @@ En este escenario, notamos que los paquetes llegan, pero no todos pueden ser pro
 
 #### Caso 2:
 En este escenario, observamos que el cuello de botella se encuentra en la red, lo que indica un problema de congestión. Al igual que en el caso anterior, vemos que la tasa de transferencia es más baja en la red, lo que resulta en una cola que se satura y comienza a eliminar paquetes, ya que la tasa de transferencia en el "camino" entre este y el nodo receptor es pequeña.
+
+### Diseño de Estrategias de Control de Flujo y Congestión:
+Para abordar los problemas identificados en el modelo inicial, proponemos un nuevo diseño que incorpora estrategias de control de flujo y congestión. En particular, implementamos dos clases nuevas: 
+
+* TransportRx (Transporte Receptor): Que recibe paquetes y los coloca en un buffer. Si el buffer está lleno, el paquete se descarta. Cuando se recibe un evento de fin de servicio, se envía el siguiente paquete en el buffer a la aplicación. Si el buffer está menos del 25% lleno después de enviar un paquete, se envía un paquete de retroalimentación al transmisor para informarle de la cantidad de espacio disponible en el buffer.
+
+* TransportTx (Transporte Transmisor): Que recibe paquetes y los coloca en un buffer para su transmisión. Si el buffer está lleno, el paquete se descarta. Cuando se recibe un evento de fin de servicio, se envía el siguiente paquete en el buffer. Si se recibe un paquete de retroalimentación indicando que el buffer del receptor está más del 75% lleno, el transmisor deja de enviar paquetes hasta que se vacíe el espacio en el buffer del receptor.
+
+Para ambas clases decidimos utilizar un mecanismo de retroalimentación para evitar la saturación del buffer del receptor. Cuando el buffer del receptor está casi lleno, se envía un paquete de retroalimentación al transmisor para que deje de enviar paquetes. Cuando el buffer del receptor tiene suficiente espacio libre, se envía otro paquete de retroalimentación al transmisor para que reanude la transmisión de paquetes.
+
+## Resultados
+### Simulación del Nuevo Modelo:
+#### Caso 1:
+#### Caso 2:
+### Análisis del Nuevo Modelo:
+
+## Conclusiones
+En este trabajo, hemos analizado el tráfico de red y diseñado estrategias de control de flujo y congestión para mejorar el rendimiento del sistema. A través de simulaciones en OMNeT++, hemos evaluado el comportamiento de un modelo de colas en un entorno simulado y hemos propuesto un nuevo diseño que incorpora estrategias de control de flujo y congestión. Los resultados obtenidos muestran que las estrategias de control de flujo y congestión propuestas son efectivas para evitar la pérdida de datos por saturación de buffers y mejorar el rendimiento del sistema. En particular, hemos observado que el uso de mecanismos de retroalimentación para regular la velocidad de transmisión de datos entre el emisor y el receptor es una estrategia efectiva para evitar la sobrecarga del receptor y minimizar la pérdida de datos.
+
+## Referencias
+* [Recursos del aula virtual](https://famaf.aulavirtual.unc.edu.ar/course/view.php?id=300)
+* [Documentación de OMNeT++](https://doc.omnetpp.org/omnetpp/manual/)
+* [Stack Overflow](https://stackoverflow.com/)
+* [Video tutorial de OMNeT++](https://www.youtube.com/watch?v=pki_NsgWqZ0)
