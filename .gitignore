@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 #Archivos generados por omnet++ que no se encuentran en el kickstarter
 Makefile
 lab3-kickstarter
@@ -19,3 +20,10 @@ TAREAS.md
 venv
 env
 >>>>>>> lab1
+=======
+# Python y entornos virtuales
+__pycache__/
+.python-version
+Python-3.6.15/
+.venv/
+>>>>>>> lab2
