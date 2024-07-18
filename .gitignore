@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #Archivos generados por omnet++ que no se encuentran en el kickstarter
 Makefile
 lab3-kickstarter
@@ -9,3 +10,12 @@ out/clang-release/
 
 #Archivo de asignación de tareas
 TAREAS.md
+=======
+*.pyc
+
+# Los entornos virtuales no se versionan
+.venv
+.env
+venv
+env
+>>>>>>> lab1
